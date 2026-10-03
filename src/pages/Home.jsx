@@ -1,9 +1,22 @@
+import products from '../data/products.js'
+import ProductCard from '../components/ProductCard'
+
 function Home() {
   return (
-    <div>
-      <h1>Welcome to MobileVerse</h1>
-      <p>Your one-stop mobile shop.</p>
-    </div>
+    <main className="main-content">
+
+      <h2 className="section-title">Featured Phones</h2>
+
+      <div className="product-grid">
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+          />
+        ))}
+      </div>
+
+    </main>
   );
 }
 

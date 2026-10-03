@@ -1,25 +1,14 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Home from "./pages/Home";
-import AllMobiles from "./pages/AllMobiles";
-import Cart from "./pages/Cart";
-import NotFound from "./pages/NotFound";
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import Home   from './pages/Home'
 
 function App() {
   return (
-    <BrowserRouter>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/mobiles">All Mobiles</Link>
-        <Link to="/cart">Cart</Link>
-      </nav>
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/mobiles" element={<AllMobiles />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <div>
+      <Navbar />
+      <Home />
+      <Footer />
+    </div>
   );
 }
 
