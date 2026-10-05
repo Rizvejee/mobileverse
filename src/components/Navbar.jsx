@@ -1,30 +1,34 @@
-function Navbar() {
+import { Link } from 'react-router-dom'
+
+function Navbar({ cartCount }) {
   return (
     <nav className="navbar">
 
-      {/* Logo */}
-      <div className="logo">
+      <Link to="/" className="logo">
         Mobile<span>Verse</span>
-      </div>
+      </Link>
 
-      {/* Links */}
       <ul className="nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/mobiles">All Mobiles</a></li>
-        <li><a href="/brands">Brands</a></li>
-        <li><a href="/deals">Deals</a></li>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/mobiles">All Mobiles</Link></li>
+        <li><Link to="/brands">Brands</Link></li>
+        <li><Link to="/deals">Deals</Link></li>
       </ul>
 
-      {/* Actions */}
       <div className="nav-actions">
-        <button className="icon-btn" title="Search">🔍</button>
-        <button className="icon-btn" title="Wishlist">🤍</button>
-        <button className="icon-btn" title="Cart">🛒</button>
+        <button className="icon-btn">🔍</button>
+        <button className="icon-btn">🤍</button>
+        <Link to="/cart" className="icon-btn cart-icon">
+          🛒
+          {cartCount > 0 && (
+            <span className="badge">{cartCount}</span>
+          )}
+        </Link>
         <button className="btn-primary">Sign In</button>
       </div>
 
     </nav>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar
