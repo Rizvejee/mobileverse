@@ -10,6 +10,7 @@ import Deals from './pages/Deals'
 import NotFound from './pages/NotFound'
 import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
+import Wishlist from './pages/Wishlist'
 
 function App() {
 
@@ -56,13 +57,52 @@ function App() {
       )
     )
   }
+  const [wishlist, setWishlist] = useState(() => {
+    const saved = localStorage.getItem("wishlist")
+    return saved ? JSON.parse(saved) : []
+  })
+
+  useEffect(() => {
+    localStorage.setItem("wishlist", JSON.stringify(wishlist))
+  }, [wishlist])
+
+  function toggleWishlist(product) {
+    setWishlist((prevWishlist) => {
+      const exists = prevWishlist.find((item) => item.id === product.id)
+
+      if (exists) {
+        return prevWishlist.filter((item) => item.id !== product.id)
+      }
+
+      return [...prevWishlist, product]
+    })
+  }
 
   return (
     <BrowserRouter>
       <Navbar cartCount={cart.reduce((total, item) => total + item.quantity, 0)} />
       <Routes>
-        <Route path="/" element={<Home addToCart={addToCart} />} />
-        <Route path="/mobiles" element={<AllMobiles addToCart={addToCart} />} />
+        <Route
+          path="/"
+          element={
+            <Home
+              addToCart={addToCart}
+              toggleWishlist={toggleWishlist}
+              wishlist={wishlist}
+            />
+          }
+        />
+
+        <Route
+          path="/mobiles"
+          element={
+            <AllMobiles
+              addToCart={addToCart}
+              toggleWishlist={toggleWishlist}
+              wishlist={wishlist}
+            />
+          }
+        />
         <Route path="/brands" element={<Brands />} />
         <Route path="/deals" element={<Deals />} />
         <Route path="/product/:id" element={<ProductDetail addToCart={addToCart} />} />
@@ -73,6 +113,16 @@ function App() {
               cart={cart}
               removeFromCart={removeFromCart}
               updateQuantity={updateQuantity}
+            />
+          }
+        />
+        <Route
+          path="/wishlist"
+          element={
+            <Wishlist
+              wishlist={wishlist}
+              toggleWishlist={toggleWishlist}
+              addToCart={addToCart}
             />
           }
         />

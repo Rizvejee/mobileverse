@@ -17,7 +17,9 @@ function Navbar({ cartCount }) {
 
       <div className="nav-actions">
         <button className="icon-btn">🔍</button>
-        <button className="icon-btn">🤍</button>
+        <Link to="/wishlist" className="icon-btn">
+          🤍
+        </Link>
         <Link to="/cart" className="icon-btn cart-icon">
           🛒
           {cartCount > 0 && (

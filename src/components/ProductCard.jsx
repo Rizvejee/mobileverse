@@ -1,13 +1,34 @@
 import { useNavigate } from 'react-router-dom'
 
-function ProductCard({ product, addToCart }) {
+function ProductCard({ product, addToCart, toggleWishlist, wishlist }) {
 
   const navigate = useNavigate()
+
+  const isWishlisted = wishlist
+    ? wishlist.some((item) => item.id === product.id)
+    : false
 
   return (
     <div className="product-card" onClick={() => navigate(`/product/${product.id}`)}>
 
-      <div className="product-img">{product.emoji}</div>
+      <div className="product-img">
+        {product.emoji}
+
+        {/* Wishlist Button */}
+        {toggleWishlist && (
+          <button
+            className={`wishlist-btn ${isWishlisted ? "wishlisted" : ""}`}
+            onClick={(e) => {
+              e.stopPropagation()
+              toggleWishlist(product)
+            }}
+          >
+            {isWishlisted ? "❤️" : "🤍"}
+          </button>
+        )}
+
+      </div>
+
       <div className="product-brand">{product.brand}</div>
       <div className="product-name">{product.name}</div>
 

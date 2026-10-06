@@ -1,7 +1,7 @@
 import products from '../data/products.js'
 import ProductCard from '../components/ProductCard'
 
-function Home({ addToCart }) {
+function Home({ addToCart, toggleWishlist, wishlist }) {
   return (
     <main className="main-content">
       <h2 className="section-title">Featured Phones</h2>
@@ -11,6 +11,8 @@ function Home({ addToCart }) {
             key={product.id}
             product={product}
             addToCart={addToCart}
+            toggleWishlist={toggleWishlist}
+            wishlist={wishlist}
           />
         ))}
       </div>
