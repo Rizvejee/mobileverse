@@ -1,13 +1,16 @@
-import { useParams } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import products from '../data/products.js'
 
-function ProductDetail() {
+function ProductDetail({ addToCart, toggleWishlist, wishlist }) {
 
   const { id } = useParams()
   const navigate = useNavigate()
 
   const product = products.find((p) => p.id === Number(id))
+
+  const isWishlisted = wishlist
+    ? wishlist.some((item) => item.id === product?.id)
+    : false
 
   if (!product) {
     return (
@@ -50,15 +53,29 @@ function ProductDetail() {
             </span>
           </div>
 
-          <button className="btn-primary" style={{ marginTop: "20px", padding: "14px 32px", fontSize: "15px" }}>
-            Add to Cart
-          </button>
+          <div style={{ display: "flex", gap: "12px", marginTop: "20px" }}>
+            <button
+              className="btn-primary"
+              style={{ padding: "14px 32px", fontSize: "15px", borderRadius: "10px" }}
+              onClick={() => addToCart(product)}
+            >
+              Add to Cart
+            </button>
+
+            <button
+              className={`wishlist-btn-detail ${isWishlisted ? "wishlisted" : ""}`}
+              onClick={() => toggleWishlist(product)}
+            >
+              {isWishlisted ? "❤️ Wishlisted" : "🤍 Wishlist"}
+            </button>
+          </div>
+
         </div>
 
       </div>
 
     </main>
-  );
+  )
 }
 
-export default ProductDetail;
+export default ProductDetail

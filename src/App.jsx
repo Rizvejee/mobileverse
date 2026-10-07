@@ -104,8 +104,26 @@ function App() {
           }
         />
         <Route path="/brands" element={<Brands />} />
-        <Route path="/deals" element={<Deals />} />
-        <Route path="/product/:id" element={<ProductDetail addToCart={addToCart} />} />
+        <Route
+          path="/deals"
+          element={
+            <Deals
+              addToCart={addToCart}
+              toggleWishlist={toggleWishlist}
+              wishlist={wishlist}
+            />
+          }
+        />
+        <Route
+          path="/product/:id"
+          element={
+            <ProductDetail
+              addToCart={addToCart}
+              toggleWishlist={toggleWishlist}
+              wishlist={wishlist}
+            />
+          }
+        />
         <Route
           path="/cart"
           element={

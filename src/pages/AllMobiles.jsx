@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import products from '../data/products.js'
 import ProductCard from '../components/ProductCard'
 
@@ -6,40 +7,44 @@ const brands = ["All", "Samsung", "Apple", "Xiaomi", "Oppo", "Vivo", "Infinix", 
 
 function AllMobiles({ addToCart, toggleWishlist, wishlist }) {
 
-  const [selectedBrand, setSelectedBrand] = useState("All")
-  const [searchQuery, setSearchQuery] = useState("")
-  const [sortBy, setSortBy] = useState("default")
+  const [searchParams] = useSearchParams()
+  const brandFromURL = searchParams.get("brand")
 
-  // Step 1 — Brand filter
+  const [selectedBrand, setSelectedBrand] = useState(brandFromURL || "All")
+  const [searchQuery, setSearchQuery]     = useState("")
+  const [sortBy, setSortBy]               = useState("default")
+
+  useEffect(() => {
+    if (brandFromURL) {
+      setSelectedBrand(brandFromURL)
+    }
+  }, [brandFromURL])
+
   const afterBrand = selectedBrand === "All"
     ? products
     : products.filter((p) => p.brand === selectedBrand)
 
-  // Step 2 — Search filter
   const afterSearch = afterBrand.filter((p) =>
     p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     p.brand.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  // Step 3 — Sort
   const finalList = [...afterSearch].sort((a, b) => {
-    if (sortBy === "price-low") return a.price - b.price
+    if (sortBy === "price-low")  return a.price - b.price
     if (sortBy === "price-high") return b.price - a.price
-    if (sortBy === "rating") return b.rating - a.rating
+    if (sortBy === "rating")     return b.rating - a.rating
     return 0
   })
 
   return (
     <main className="main-content">
 
-      {/* Top Bar */}
       <div className="filter-topbar">
         <h2 className="section-title" style={{ margin: 0 }}>
           All Mobiles
           <span className="result-count">{finalList.length} phones</span>
         </h2>
 
-        {/* Search */}
         <input
           type="text"
           className="search-input"
@@ -48,7 +53,6 @@ function AllMobiles({ addToCart, toggleWishlist, wishlist }) {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
 
-        {/* Sort */}
         <select
           className="sort-select"
           value={sortBy}
@@ -61,7 +65,6 @@ function AllMobiles({ addToCart, toggleWishlist, wishlist }) {
         </select>
       </div>
 
-      {/* Brand Chips */}
       <div className="brand-chips">
         {brands.map((brand) => (
           <button
@@ -74,7 +77,6 @@ function AllMobiles({ addToCart, toggleWishlist, wishlist }) {
         ))}
       </div>
 
-      {/* Results */}
       {finalList.length === 0 ? (
         <div className="empty-state">
           <div style={{ fontSize: "48px", marginBottom: "12px" }}>🔍</div>
