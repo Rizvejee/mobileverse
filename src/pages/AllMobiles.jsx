@@ -7,20 +7,20 @@ import { useCart } from '../context/CartContext'
 const brands = ["All", "Samsung", "Apple", "Xiaomi", "Oppo", "Vivo", "Infinix", "OnePlus"]
 
 function AllMobiles() {
-  
+
   const { addToCart, toggleWishlist, wishlist } = useCart()
   const [searchParams] = useSearchParams()
   const brandFromURL = searchParams.get("brand")
+  const searchFromURL = searchParams.get("search")
 
   const [selectedBrand, setSelectedBrand] = useState(brandFromURL || "All")
-  const [searchQuery, setSearchQuery]     = useState("")
-  const [sortBy, setSortBy]               = useState("default")
+  const [searchQuery, setSearchQuery] = useState(searchFromURL || "")
+  const [sortBy, setSortBy] = useState("default")
 
   useEffect(() => {
-    if (brandFromURL) {
-      setSelectedBrand(brandFromURL)
-    }
-  }, [brandFromURL])
+    if (brandFromURL) setSelectedBrand(brandFromURL)
+    if (searchFromURL) setSearchQuery(searchFromURL)
+  }, [brandFromURL, searchFromURL])
 
   const afterBrand = selectedBrand === "All"
     ? products
@@ -32,9 +32,9 @@ function AllMobiles() {
   )
 
   const finalList = [...afterSearch].sort((a, b) => {
-    if (sortBy === "price-low")  return a.price - b.price
+    if (sortBy === "price-low") return a.price - b.price
     if (sortBy === "price-high") return b.price - a.price
-    if (sortBy === "rating")     return b.rating - a.rating
+    if (sortBy === "rating") return b.rating - a.rating
     return 0
   })
 
