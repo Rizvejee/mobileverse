@@ -1,32 +1,22 @@
 import { useNavigate } from 'react-router-dom'
+import { useCart } from '../context/CartContext'
 
-function ProductCard({ product, addToCart, toggleWishlist, wishlist }) {
-
+function ProductCard({ product }) {
   const navigate = useNavigate()
+  const { addToCart, toggleWishlist, wishlist } = useCart()
 
-  const isWishlisted = wishlist
-    ? wishlist.some((item) => item.id === product.id)
-    : false
+  const isWishlisted = wishlist.some((item) => item.id === product.id)
 
   return (
     <div className="product-card" onClick={() => navigate(`/product/${product.id}`)}>
-
       <div className="product-img">
         {product.emoji}
-
-        {/* Wishlist Button */}
-        {toggleWishlist && (
-          <button
-            className={`wishlist-btn ${isWishlisted ? "wishlisted" : ""}`}
-            onClick={(e) => {
-              e.stopPropagation()
-              toggleWishlist(product)
-            }}
-          >
-            {isWishlisted ? "❤️" : "🤍"}
-          </button>
-        )}
-
+        <button
+          className={`wishlist-btn ${isWishlisted ? "wishlisted" : ""}`}
+          onClick={(e) => { e.stopPropagation(); toggleWishlist(product) }}
+        >
+          {isWishlisted ? "❤️" : "🤍"}
+        </button>
       </div>
 
       <div className="product-brand">{product.brand}</div>
@@ -41,15 +31,11 @@ function ProductCard({ product, addToCart, toggleWishlist, wishlist }) {
         <div className="rating">⭐ {product.rating}</div>
         <button
           className="add-btn"
-          onClick={(e) => {
-            e.stopPropagation()
-            addToCart(product)
-          }}
+          onClick={(e) => { e.stopPropagation(); addToCart(product) }}
         >
           Add to Cart
         </button>
       </div>
-
     </div>
   )
 }

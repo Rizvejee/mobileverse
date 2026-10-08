@@ -1,8 +1,11 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import products from '../data/products.js'
+import { useCart } from '../context/CartContext'
 
-function ProductDetail({ addToCart, toggleWishlist, wishlist }) {
 
+function ProductDetail() {
+
+  const { addToCart, toggleWishlist, wishlist } = useCart()
   const { id } = useParams()
   const navigate = useNavigate()
 

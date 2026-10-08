@@ -1,12 +1,15 @@
 import ProductCard from '../components/ProductCard'
 import products from '../data/products.js'
+import { useCart } from '../context/CartContext'
+
 
 function getDiscount(price, oldPrice) {
   return Math.round(((oldPrice - price) / oldPrice) * 100)
 }
 
-function Deals({ addToCart, toggleWishlist, wishlist }) {
+function Deals() {
 
+  const { addToCart, toggleWishlist, wishlist } = useCart()
   const dealProducts = products
     .filter((p) => getDiscount(p.price, p.oldPrice) >= 5)
     .sort((a, b) =>

@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import products from '../data/products.js'
 import ProductCard from '../components/ProductCard'
+import { useCart } from '../context/CartContext'
 
 const brands = ["All", "Samsung", "Apple", "Xiaomi", "Oppo", "Vivo", "Infinix", "OnePlus"]
 
-function AllMobiles({ addToCart, toggleWishlist, wishlist }) {
-
+function AllMobiles() {
+  
+  const { addToCart, toggleWishlist, wishlist } = useCart()
   const [searchParams] = useSearchParams()
   const brandFromURL = searchParams.get("brand")
 

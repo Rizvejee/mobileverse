@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
+import { useCart } from '../context/CartContext'
 
-function Navbar({ cartCount }) {
+function Navbar() {
+  const { cart } = useCart()
+  const cartCount = cart.reduce((total, item) => total + item.quantity, 0)
+
   return (
     <nav className="navbar">
-
-      <Link to="/" className="logo">
-        Mobile<span>Verse</span>
-      </Link>
+      <Link to="/" className="logo">Mobile<span>Verse</span></Link>
 
       <ul className="nav-links">
         <li><Link to="/">Home</Link></li>
@@ -17,18 +18,13 @@ function Navbar({ cartCount }) {
 
       <div className="nav-actions">
         <button className="icon-btn">🔍</button>
-        <Link to="/wishlist" className="icon-btn">
-          🤍
-        </Link>
+        <Link to="/wishlist" className="icon-btn">🤍</Link>
         <Link to="/cart" className="icon-btn cart-icon">
           🛒
-          {cartCount > 0 && (
-            <span className="badge">{cartCount}</span>
-          )}
+          {cartCount > 0 && <span className="badge">{cartCount}</span>}
         </Link>
         <button className="btn-primary">Sign In</button>
       </div>
-
     </nav>
   )
 }

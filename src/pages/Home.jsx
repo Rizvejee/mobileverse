@@ -1,7 +1,12 @@
 import products from '../data/products.js'
 import ProductCard from '../components/ProductCard'
+import { useCart } from '../context/CartContext'
 
-function Home({ addToCart, toggleWishlist, wishlist }) {
+
+function Home() {
+
+  const { addToCart, toggleWishlist, wishlist } = useCart()
+
   return (
     <main className="main-content">
       <h2 className="section-title">Featured Phones</h2>

@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom'
 import ProductCard from '../components/ProductCard'
+import { useCart } from '../context/CartContext'
 
-function Wishlist({ wishlist, toggleWishlist, addToCart }) {
 
+function Wishlist() {
+
+  const { addToCart, toggleWishlist, wishlist } = useCart()
   if (wishlist.length === 0) {
     return (
       <main className="main-content" style={{ textAlign: "center", padding: "80px 40px" }}>
